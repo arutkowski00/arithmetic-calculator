@@ -1,4 +1,5 @@
-﻿using SimpleInjector;
+﻿using ArithmeticCalculator.Algorithms;
+using SimpleInjector;
 
 namespace ArithmeticCalculator
 {

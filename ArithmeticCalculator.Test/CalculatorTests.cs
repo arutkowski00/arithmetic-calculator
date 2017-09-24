@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ArithmeticCalculator.Algorithms;
 using ArithmeticCalculator.Tokens;
 using Moq;
 using NUnit.Framework;

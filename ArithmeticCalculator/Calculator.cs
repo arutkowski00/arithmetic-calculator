@@ -1,4 +1,6 @@
-﻿namespace ArithmeticCalculator
+﻿using ArithmeticCalculator.Algorithms;
+
+namespace ArithmeticCalculator
 {
     public class Calculator
     {
