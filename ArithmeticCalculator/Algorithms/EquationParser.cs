@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -7,15 +8,11 @@ using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Extensions;
 using ArithmeticCalculator.Tokens;
 
-namespace ArithmeticCalculator
+namespace ArithmeticCalculator.Algorithms
 {
-    public interface IEquationParser
-    {
-        IEnumerable<IToken> Parse(string equation);
-    }
-
     public class EquationParser : IEquationParser
     {
+        private const char NegativeSign = '-';
         private static readonly char[] OpeningBrackets = {'[', '('};
         private static readonly char[] ClosingBrackets = {']', ')'};
         private static readonly char[] DecimalSeparators = {'.', ','};
@@ -41,12 +38,16 @@ namespace ArithmeticCalculator
 
         public IEnumerable<IToken> Parse(string equation)
         {
-            equation = equation.RemoveWhitespace();
+            equation = equation?.RemoveWhitespace() ?? throw new ArgumentNullException(nameof(equation));
+
+            if (equation.Length == 0)
+                return new IToken[] { };
 
             var tokens = new List<IToken>();
 
             var symbolType = DetectSymbolType(equation[0]);
             var tokenBuilder = new StringBuilder(equation.Length / 2);
+            var buildToken = false;
 
             for (var i = 0; i < equation.Length; i++)
             {
@@ -64,24 +65,50 @@ namespace ArithmeticCalculator
                         tokens.Add(new GroupToken(GroupTokenType.Closing));
                         break;
                     case SymbolType.Letter:
-                        break;
+                        throw new UnsupportedSymbolException(nameof(EquationParser), symbolType);
                     case SymbolType.Digit:
-                        if (nextSymbolType != symbolType)
+                        buildToken = true;
+                        if (nextSymbolType != SymbolType.Digit)
                         {
                             var tokenString = tokenBuilder.ToString();
 
                             decimal number;
-                            if (!decimal.TryParse(tokenString, NumberStyles.Any, CultureInfo.InvariantCulture,
+                            if (!decimal.TryParse(tokenString,
+                                NumberStyles.Float,
+                                CultureInfo.InvariantCulture,
                                 out number))
                             {
                                 throw new ParseException($"Invalid number format: {tokenString}",
                                     i + 1 - tokenBuilder.Length);
                             }
                             tokens.Add(new NumberToken(number));
+                            buildToken = false;
                         }
                         break;
                     case SymbolType.Operator:
-                        tokens.Add(new OperationToken(OperationTypeMap[symbol]));
+                        if ((tokens.Count == 0 || tokens.Last().IsOperator) &&
+                            symbol == NegativeSign)
+                        {
+                            switch (nextSymbolType)
+                            {
+                                case SymbolType.Digit:
+                                    // treat '-' between operation and digit as number sign
+                                    buildToken = true;
+                                    break;
+                                case SymbolType.OpeningBracket:
+                                case SymbolType.Letter:
+                                    // treat '-' between operation and opening bracket or letter as (-1 * x)
+                                    tokens.Add(new NumberToken(-1));
+                                    tokens.Add(new OperationToken(OperationType.Multiply));
+                                    break;
+                                default:
+                                    throw new ParseException($"Invalid use of {NegativeSign}", i);
+                            }
+                        }
+                        else
+                        {
+                            tokens.Add(new OperationToken(OperationTypeMap[symbol]));
+                        }
                         break;
                     case SymbolType.Unknown:
                         throw new UnknownTokenException(symbol, i);
@@ -89,7 +116,7 @@ namespace ArithmeticCalculator
                         throw new ArgumentOutOfRangeException();
                 }
 
-                if (nextSymbolType != symbolType)
+                if (!buildToken && tokenBuilder.Length > 0)
                 {
                     tokenBuilder.Clear();
                 }

@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
 using ArithmeticCalculator.Tokens;
 
-namespace ArithmeticCalculator
+namespace ArithmeticCalculator.Algorithms
 {
-    public interface IReversePolishNotationBuilder
-    {
-        IEnumerable<IToken> Build(IEnumerable<IToken> infixNotationTokens);
-    }
-
     public class ReversePolishNotationBuilder : IReversePolishNotationBuilder
     {
         private readonly Dictionary<OperationType, int> _operationPrecedences = new Dictionary<OperationType, int>

@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tokens;
 
-namespace ArithmeticCalculator
+namespace ArithmeticCalculator.Algorithms
 {
-    public interface IReversePolishNotationCalculator
-    {
-        decimal Calculate(IEnumerable<IToken> reversePolishNotationTokens);
-    }
-
     public class ReversePolishNotationCalculator : IReversePolishNotationCalculator
     {
         public delegate decimal CalculateOperationCallback(decimal x, decimal y);
@@ -51,7 +46,7 @@ namespace ArithmeticCalculator
                 }
                 else
                 {
-                    throw new UnsupportedTokenTypeException(nameof(ReversePolishNotationCalculator), token);
+                    throw new UnsupportedTokenException(nameof(ReversePolishNotationCalculator), token);
                 }
             }
 
