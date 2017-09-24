@@ -6,10 +6,4 @@
         {
         }
     }
-
-    public enum GroupTokenType
-    {
-        Opening,
-        Closing
-    }
 }
