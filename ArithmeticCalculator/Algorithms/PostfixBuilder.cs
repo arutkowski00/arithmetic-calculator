@@ -30,7 +30,8 @@ namespace ArithmeticCalculator.Algorithms
                     var operationToken = (OperationToken) infixToken;
 
                     while (operatorStack.Count > 0 &&
-                           !ReferenceEquals(operationToken, GetOperatorWithGreaterPrecedence(operationToken, operatorStack.Peek())))
+                           !ReferenceEquals(operationToken,
+                               GetOperatorWithGreaterPrecedence(operationToken, operatorStack.Peek())))
                     {
                         outputQueue.Enqueue(operatorStack.Pop());
                     }
@@ -48,10 +49,11 @@ namespace ArithmeticCalculator.Algorithms
                     {
                         while (operatorStack.Count > 0)
                         {
-                            var tokenFromStack = operatorStack.Pop() as GroupToken;
+                            var tokenFromStack = operatorStack.Pop();
+                            var groupTokenFromStack = tokenFromStack as GroupToken;
 
-                            if (tokenFromStack != null &&
-                                tokenFromStack.Value == GroupTokenType.Opening)
+                            if (groupTokenFromStack != null &&
+                                groupTokenFromStack.Value == GroupTokenType.Opening)
                                 break;
 
                             outputQueue.Enqueue(tokenFromStack);
