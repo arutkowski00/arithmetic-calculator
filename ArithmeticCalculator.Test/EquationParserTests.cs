@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ArithmeticCalculator.Algorithms;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tokens;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace ArithmeticCalculator.Test
         private readonly EquationParser _equationParser = new EquationParser();
         
         [Test]
-        public void ReturnTokensIfEquationIsValid()
+        public void DoesParseEquation()
         {
             const string equation = "2 + (4 / 8) * 3";
             var expectedTokens = new IToken[]
@@ -25,19 +26,35 @@ namespace ArithmeticCalculator.Test
                 new GroupToken(GroupTokenType.Closing), 
                 new OperationToken(OperationType.Multiply),
                 new NumberToken(3)
-            };
+            }.ToList();
             
-            var infixTokens = _equationParser.Parse(equation).ToArray();
+            var infixTokens = _equationParser.Parse(equation).ToList();
             
-            Assert.AreEqual(expectedTokens.Length, infixTokens.Length);
-            
-            for (var i = 0; i < expectedTokens.Length; i++)
+            AssertHelpers.AreListsEqual(expectedTokens, infixTokens);
+        }
+
+        [Test]
+        public void DoesParseEquationWithNegativeNumbers()
+        {
+            const string equation = "-2 + -3 * -(-4 / 8)";
+            var expectedTokens = new IToken[]
             {
-                var expectedToken = expectedTokens[i];
-                var infixToken = infixTokens[i];
-                    
-                Assert.AreEqual(expectedToken, infixToken);
-            }
+                new NumberToken(-2),
+                new OperationToken(OperationType.Add),
+                new NumberToken(-3),
+                new OperationToken(OperationType.Multiply),
+                new NumberToken(-1),
+                new OperationToken(OperationType.Multiply),
+                new GroupToken(GroupTokenType.Opening),
+                new NumberToken(-4),
+                new OperationToken(OperationType.Divide),
+                new NumberToken(8),
+                new GroupToken(GroupTokenType.Closing)
+            }.ToList();
+            
+            var infixTokens = _equationParser.Parse(equation).ToList();
+            
+            AssertHelpers.AreListsEqual(expectedTokens, infixTokens);
         }
 
         [Test]
