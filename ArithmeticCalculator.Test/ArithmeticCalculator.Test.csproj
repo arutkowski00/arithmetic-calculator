@@ -52,10 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculatorTests.cs" />
-    <Compile Include="EquationParserTests.cs" />
+    <Compile Include="Data\EquationTestData.cs" />
+    <Compile Include="Data\EquationTestDataItem.cs" />
+    <Compile Include="InfixEquationParserTests.cs" />
+    <Compile Include="Helpers\AssertHelpers.cs" />
     <Compile Include="IocContainerTests.cs" />
+    <Compile Include="PostfixCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AssertHelpers.cs" />
+    <Compile Include="PostfixBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArithmeticCalculator\ArithmeticCalculator.csproj">
