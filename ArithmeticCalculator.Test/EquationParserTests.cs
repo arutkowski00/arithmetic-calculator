@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ArithmeticCalculator.Algorithms;
 using ArithmeticCalculator.Exceptions;
+using ArithmeticCalculator.Test.Helpers;
 using ArithmeticCalculator.Tokens;
 using NUnit.Framework;
 
@@ -9,7 +11,7 @@ namespace ArithmeticCalculator.Test
     [TestFixture]
     public class EquationParserTests
     {
-        private readonly EquationParser _equationParser = new EquationParser();
+        private readonly InfixEquationParser _infixEquationParser = new InfixEquationParser();
         
         [Test]
         public void DoesParseEquation()
@@ -28,7 +30,7 @@ namespace ArithmeticCalculator.Test
                 new NumberToken(3)
             }.ToList();
             
-            var infixTokens = _equationParser.Parse(equation).ToList();
+            var infixTokens = _infixEquationParser.Parse(equation).ToList();
             
             AssertHelpers.AreListsEqual(expectedTokens, infixTokens);
         }
@@ -52,7 +54,7 @@ namespace ArithmeticCalculator.Test
                 new GroupToken(GroupTokenType.Closing)
             }.ToList();
             
-            var infixTokens = _equationParser.Parse(equation).ToList();
+            var infixTokens = _infixEquationParser.Parse(equation).ToList();
             
             AssertHelpers.AreListsEqual(expectedTokens, infixTokens);
         }
@@ -64,8 +66,23 @@ namespace ArithmeticCalculator.Test
 
             Assert.Throws<UnknownTokenException>(() =>
             {
-                _equationParser.Parse(equation);
+                _infixEquationParser.Parse(equation);
             });
+        }
+        
+        [Test]
+        public void ThrowExceptionIfEquationIsNull()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _infixEquationParser.Parse(null);
+            });
+        }
+
+        [Test]
+        public void ReturnEmptyEnumerableIfEquationIsEmpty()
+        {
+            Assert.IsEmpty(_infixEquationParser.Parse(""));
         }
     }
 }

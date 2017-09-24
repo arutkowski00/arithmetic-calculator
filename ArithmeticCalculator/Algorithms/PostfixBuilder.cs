@@ -3,7 +3,7 @@ using ArithmeticCalculator.Tokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
-    public class ReversePolishNotationBuilder : IReversePolishNotationBuilder
+    public class PostfixBuilder : IPostfixBuilder
     {
         private readonly Dictionary<OperationType, int> _operationPrecedences = new Dictionary<OperationType, int>
         {

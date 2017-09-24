@@ -10,7 +10,7 @@ using ArithmeticCalculator.Tokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
-    public class EquationParser : IEquationParser
+    public class InfixEquationParser : IEquationParser
     {
         private const char NegativeSign = '-';
         private static readonly char[] OpeningBrackets = {'[', '('};
@@ -65,7 +65,7 @@ namespace ArithmeticCalculator.Algorithms
                         tokens.Add(new GroupToken(GroupTokenType.Closing));
                         break;
                     case SymbolType.Letter:
-                        throw new UnsupportedSymbolException(nameof(EquationParser), symbolType);
+                        throw new UnsupportedSymbolException(nameof(InfixEquationParser), symbolType);
                     case SymbolType.Digit:
                         buildToken = true;
                         if (nextSymbolType != SymbolType.Digit)

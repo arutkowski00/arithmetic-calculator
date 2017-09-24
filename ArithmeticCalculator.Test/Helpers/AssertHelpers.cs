@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace ArithmeticCalculator.Test
+namespace ArithmeticCalculator.Test.Helpers
 {
     public static class AssertHelpers
     {

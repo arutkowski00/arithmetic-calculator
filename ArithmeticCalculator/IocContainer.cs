@@ -10,9 +10,9 @@ namespace ArithmeticCalculator
             var container = new Container();
 
             container.Register<Calculator>();
-            container.Register<IEquationParser, EquationParser>();
-            container.Register<IReversePolishNotationBuilder, ReversePolishNotationBuilder>();
-            container.Register<IReversePolishNotationCalculator, ReversePolishNotationCalculator>();
+            container.Register<IEquationParser, InfixEquationParser>();
+            container.Register<IPostfixBuilder, PostfixBuilder>();
+            container.Register<IPostfixCalculator, PostfixCalculator>();
             
             return container;
         }

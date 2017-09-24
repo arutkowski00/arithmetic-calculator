@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\EquationParser.cs" />
+    <Compile Include="Algorithms\InfixEquationParser.cs" />
     <Compile Include="Algorithms\IEquationParser.cs" />
-    <Compile Include="Algorithms\IReversePolishNotationBuilder.cs" />
-    <Compile Include="Algorithms\IReversePolishNotationCalculator.cs" />
-    <Compile Include="Algorithms\ReversePolishNotationBuilder.cs" />
-    <Compile Include="Algorithms\ReversePolishNotationCalculator.cs" />
+    <Compile Include="Algorithms\IPostfixBuilder.cs" />
+    <Compile Include="Algorithms\IPostfixCalculator.cs" />
+    <Compile Include="Algorithms\PostfixBuilder.cs" />
+    <Compile Include="Algorithms\PostfixCalculator.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="Exceptions\ParseException.cs" />
     <Compile Include="Exceptions\UnknownTokenException.cs" />

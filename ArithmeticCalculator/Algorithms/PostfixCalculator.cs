@@ -5,7 +5,7 @@ using ArithmeticCalculator.Tokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
-    public class ReversePolishNotationCalculator : IReversePolishNotationCalculator
+    public class PostfixCalculator : IPostfixCalculator
     {
         public delegate decimal CalculateOperationCallback(decimal x, decimal y);
 
@@ -46,7 +46,7 @@ namespace ArithmeticCalculator.Algorithms
                 }
                 else
                 {
-                    throw new UnsupportedTokenException(nameof(ReversePolishNotationCalculator), token);
+                    throw new UnsupportedTokenException(nameof(PostfixCalculator), token);
                 }
             }
 

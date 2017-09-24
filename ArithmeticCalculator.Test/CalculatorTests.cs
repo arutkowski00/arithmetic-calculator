@@ -9,11 +9,11 @@ namespace ArithmeticCalculator.Test
     [TestFixture]
     public class CalculatorTests
     {
-        private readonly Mock<IReversePolishNotationBuilder> _reversePolishNotationBuilder =
-            new Mock<IReversePolishNotationBuilder>();
+        private readonly Mock<IPostfixBuilder> _reversePolishNotationBuilder =
+            new Mock<IPostfixBuilder>();
 
-        private readonly Mock<IReversePolishNotationCalculator> _reversePolishNotationCalculator =
-            new Mock<IReversePolishNotationCalculator>();
+        private readonly Mock<IPostfixCalculator> _reversePolishNotationCalculator =
+            new Mock<IPostfixCalculator>();
 
         private readonly Mock<IEquationParser> _equationParser =
             new Mock<IEquationParser>();

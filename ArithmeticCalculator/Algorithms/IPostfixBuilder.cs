@@ -3,8 +3,8 @@ using ArithmeticCalculator.Tokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
-    public interface IReversePolishNotationCalculator
+    public interface IPostfixBuilder
     {
-        decimal Calculate(IEnumerable<IToken> reversePolishNotationTokens);
+        IEnumerable<IToken> Build(IEnumerable<IToken> infixNotationTokens);
     }
 }

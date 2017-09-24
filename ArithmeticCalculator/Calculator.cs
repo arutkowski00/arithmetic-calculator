@@ -4,15 +4,15 @@ namespace ArithmeticCalculator
 {
     public class Calculator
     {
-        private readonly IReversePolishNotationBuilder _reversePolishNotationBuilder;
-        private readonly IReversePolishNotationCalculator _reversePolishNotationCalculator;
+        private readonly IPostfixBuilder _postfixBuilder;
+        private readonly IPostfixCalculator _postfixCalculator;
         private readonly IEquationParser _equationParser;
 
-        public Calculator(IReversePolishNotationBuilder reversePolishNotationBuilder,
-            IReversePolishNotationCalculator reversePolishNotationCalculator, IEquationParser equationParser)
+        public Calculator(IPostfixBuilder postfixBuilder,
+            IPostfixCalculator postfixCalculator, IEquationParser equationParser)
         {
-            _reversePolishNotationBuilder = reversePolishNotationBuilder;
-            _reversePolishNotationCalculator = reversePolishNotationCalculator;
+            _postfixBuilder = postfixBuilder;
+            _postfixCalculator = postfixCalculator;
             _equationParser = equationParser;
         }
 
@@ -20,8 +20,8 @@ namespace ArithmeticCalculator
         {
             var parsedEquation = _equationParser.Parse(equation);
             // TODO: analyse parsed equation
-            var rpNotation = _reversePolishNotationBuilder.Build(parsedEquation);
-            var result = _reversePolishNotationCalculator.Calculate(rpNotation);
+            var rpNotation = _postfixBuilder.Build(parsedEquation);
+            var result = _postfixCalculator.Calculate(rpNotation);
 
             return result;
         }
