@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -15,7 +14,7 @@ namespace ArithmeticCalculator.Algorithms
         private const char NegativeSign = '-';
         private static readonly char[] OpeningBrackets = {'[', '('};
         private static readonly char[] ClosingBrackets = {']', ')'};
-        private static readonly char[] DecimalSeparators = {'.', ','};
+        private static readonly char[] DigitSymbols = {'.', ','};
 
         private static readonly Dictionary<char, OperationType> OperationTypeMap = new Dictionary<char, OperationType>
         {
@@ -33,7 +32,7 @@ namespace ArithmeticCalculator.Algorithms
                 {SymbolType.ClosingBracket, ClosingBrackets.Contains},
                 {SymbolType.Operator, OperationTypeMap.Keys.Contains},
                 {SymbolType.Letter, char.IsLetter},
-                {SymbolType.Digit, (c) => char.IsDigit(c) || DecimalSeparators.Contains(c)},
+                {SymbolType.Digit, (c) => char.IsDigit(c) || DigitSymbols.Contains(c)},
             };
 
         public IEnumerable<IToken> Parse(string equation)
@@ -74,8 +73,8 @@ namespace ArithmeticCalculator.Algorithms
 
                             decimal number;
                             if (!decimal.TryParse(tokenString,
-                                NumberStyles.Float,
-                                CultureInfo.InvariantCulture,
+                                NumberStyles.Number,
+                                CultureInfo.CurrentCulture,
                                 out number))
                             {
                                 throw new ParseException($"Invalid number format: {tokenString}",
