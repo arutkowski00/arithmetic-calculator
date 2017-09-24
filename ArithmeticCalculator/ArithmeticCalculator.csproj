@@ -44,22 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\EquationParser.cs" />
+    <Compile Include="Algorithms\IEquationParser.cs" />
+    <Compile Include="Algorithms\IReversePolishNotationBuilder.cs" />
+    <Compile Include="Algorithms\IReversePolishNotationCalculator.cs" />
+    <Compile Include="Algorithms\ReversePolishNotationBuilder.cs" />
+    <Compile Include="Algorithms\ReversePolishNotationCalculator.cs" />
     <Compile Include="Calculator.cs" />
-    <Compile Include="EquationParser.cs" />
     <Compile Include="Exceptions\ParseException.cs" />
     <Compile Include="Exceptions\UnknownTokenException.cs" />
-    <Compile Include="Exceptions\UnsupportedTokenTypeException.cs" />
+    <Compile Include="Exceptions\UnsupportedSymbolException.cs" />
+    <Compile Include="Exceptions\UnsupportedTokenException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IocContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReversePolishNotationBuilder.cs" />
-    <Compile Include="ReversePolishNotationCalculator.cs" />
     <Compile Include="Tokens\GroupToken.cs" />
+    <Compile Include="Tokens\GroupTokenType.cs" />
     <Compile Include="Tokens\IToken.cs" />
     <Compile Include="Tokens\IValueToken.cs" />
     <Compile Include="Tokens\NumberToken.cs" />
     <Compile Include="Tokens\OperationToken.cs" />
+    <Compile Include="Tokens\OperationType.cs" />
     <Compile Include="Tokens\OperatorToken.cs" />
     <Compile Include="SymbolType.cs" />
     <Compile Include="Tokens\ValueToken.cs" />
