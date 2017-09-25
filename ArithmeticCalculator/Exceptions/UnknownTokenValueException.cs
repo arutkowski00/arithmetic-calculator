@@ -3,10 +3,10 @@ using ArithmeticCalculator.Tokens;
 
 namespace ArithmeticCalculator.Exceptions
 {
-    public class UnknownTokenValueException : Exception
+    public class UnknownTokenValueException : ParseException
     {
         public UnknownTokenValueException(IValueToken token)
-            : base($"Unknown {token.GetType().Name} value `{token.Value}`")
+            : base($"Unknown {token.GetType().Name} value `{token.Value}`", token.CharAt)
         {
         }
     }

@@ -2,7 +2,7 @@
 {
     public class OperationToken : OperatorToken<OperationType>
     {
-        public OperationToken(OperationType value) : base(value)
+        public OperationToken(OperationType value, int charAt) : base(value, charAt)
         {
         }
     }

@@ -7,6 +7,7 @@
         ClosingBracket,
         Letter,
         Digit,
-        Operator
+        Operator,
+        Whitespace
     }
 }

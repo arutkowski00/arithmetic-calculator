@@ -2,7 +2,7 @@
 {
     public class GroupToken : OperatorToken<GroupTokenType>
     {
-        public GroupToken(GroupTokenType value) : base(value)
+        public GroupToken(GroupTokenType value, int charAt) : base(value, charAt)
         {
         }
     }

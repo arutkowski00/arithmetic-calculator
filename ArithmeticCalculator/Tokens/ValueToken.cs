@@ -2,21 +2,20 @@
 
 namespace ArithmeticCalculator.Tokens
 {
-    public abstract class ValueToken<T> : IValueToken<T>
+    public abstract class ValueToken<T> : BaseToken, IValueToken<T>
     {
-        public abstract bool IsNumber { get; }
-        public abstract bool IsOperator { get; }
         object IValueToken.Value => Value;
         public T Value { get; }
-        
-        protected ValueToken(T value)
+
+        protected ValueToken(T value, int charAt)
+            : base(charAt)
         {
             Value = value;
         }
 
         protected bool Equals(ValueToken<T> other)
         {
-            return EqualityComparer<T>.Default.Equals(Value, other.Value);
+            return base.Equals(other) && EqualityComparer<T>.Default.Equals(Value, other.Value);
         }
 
         public override bool Equals(object obj)
@@ -29,8 +28,10 @@ namespace ArithmeticCalculator.Tokens
 
         public override int GetHashCode()
         {
-            return EqualityComparer<T>.Default.GetHashCode(Value);
+            unchecked
+            {
+                return (base.GetHashCode() * 397) ^ EqualityComparer<T>.Default.GetHashCode(Value);
+            }
         }
-
     }
 }

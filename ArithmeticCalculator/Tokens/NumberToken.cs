@@ -5,7 +5,7 @@
         public override bool IsNumber => true;
         public override bool IsOperator => false;
 
-        public NumberToken(double value) : base(value)
+        public NumberToken(double value, int charAt) : base(value, charAt)
         {
         }
     }

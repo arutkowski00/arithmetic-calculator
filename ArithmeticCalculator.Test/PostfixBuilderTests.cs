@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ArithmeticCalculator.Algorithms;
+using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Test.Data;
 using ArithmeticCalculator.Test.Helpers;
 using ArithmeticCalculator.Tokens;
@@ -20,6 +21,23 @@ namespace ArithmeticCalculator.Test
             var postfixTokens = _postfixBuilder.Build(infixTokens).ToList();
 
             AssertHelpers.AreListsEqual(expectedPostfixTokens, postfixTokens);
+        }
+
+        [Test]
+        public void ThrowExceptionIfTokensEnumerableHasUnsupportedToken()
+        {
+            var tokens = new IToken[]
+            {
+                new UnsupportedToken()
+            };
+            Assert.Throws<UnsupportedTokenException>(() => _postfixBuilder.Build(tokens));
+        }
+        
+        private class UnsupportedToken : IToken
+        {
+            public int CharAt => 0;
+            public bool IsNumber => false;
+            public bool IsOperator => false;
         }
     }
 }

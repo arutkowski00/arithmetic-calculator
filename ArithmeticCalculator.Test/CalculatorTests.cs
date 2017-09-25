@@ -36,9 +36,9 @@ namespace ArithmeticCalculator.Test
             const int result = 4;
 
             var infixTokens = new IToken[]
-                {new NumberToken(2), new OperationToken(OperationType.Add), new NumberToken(2)};
+                {new NumberToken(2, 1), new OperationToken(OperationType.Add, 3), new NumberToken(2, 5)};
             var reversePolishTokens = new IToken[]
-                {new NumberToken(2), new NumberToken(2), new OperationToken(OperationType.Add)};
+                {new NumberToken(2, 1), new NumberToken(2, 5), new OperationToken(OperationType.Add, 3)};
             
             _equationParser.Setup(x => x.Parse(It.IsAny<string>()))
                 .Returns(infixTokens);

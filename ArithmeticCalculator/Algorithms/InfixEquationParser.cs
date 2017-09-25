@@ -34,11 +34,12 @@ namespace ArithmeticCalculator.Algorithms
                 {SymbolType.Operator, OperationTypeMap.Keys.Contains},
                 {SymbolType.Letter, char.IsLetter},
                 {SymbolType.Digit, (c) => char.IsDigit(c) || DigitSymbols.Contains(c)},
+                {SymbolType.Whitespace, char.IsWhiteSpace},
             };
 
         public IEnumerable<IToken> Parse(string equation)
         {
-            equation = equation?.RemoveWhitespace() ?? throw new ArgumentNullException(nameof(equation));
+            if (equation == null) throw new ArgumentNullException(nameof(equation));
 
             if (equation.Length == 0)
                 return new IToken[] { };
@@ -52,6 +53,7 @@ namespace ArithmeticCalculator.Algorithms
             for (var i = 0; i < equation.Length; i++)
             {
                 var symbol = equation[i];
+                var symbolStartAt = i + 1 - tokenBuilder.Length;
                 tokenBuilder.Append(symbol);
 
                 var nextSymbolType = i < equation.Length - 1 ? DetectSymbolType(equation[i + 1]) : SymbolType.Unknown;
@@ -59,17 +61,17 @@ namespace ArithmeticCalculator.Algorithms
                 switch (symbolType)
                 {
                     case SymbolType.OpeningBracket:
-                        tokens.Add(new GroupToken(GroupTokenType.Opening));
+                        tokens.Add(new GroupToken(GroupTokenType.Opening, symbolStartAt));
                         break;
                     case SymbolType.ClosingBracket:
-                        tokens.Add(new GroupToken(GroupTokenType.Closing));
+                        tokens.Add(new GroupToken(GroupTokenType.Closing, symbolStartAt));
                         break;
                     case SymbolType.Letter:
                         buildToken = true;
                         if (nextSymbolType != SymbolType.Letter)
                         {
                             var tokenString = tokenBuilder.ToString();
-                            tokens.Add(new StringToken(tokenString));
+                            tokens.Add(new StringToken(tokenString, symbolStartAt));
                             buildToken = false;
                         }
                         break;
@@ -86,9 +88,9 @@ namespace ArithmeticCalculator.Algorithms
                                 out number))
                             {
                                 throw new ParseException($"Invalid number format: {tokenString}",
-                                    i + 1 - tokenBuilder.Length);
+                                    symbolStartAt);
                             }
-                            tokens.Add(new NumberToken(number));
+                            tokens.Add(new NumberToken(number, symbolStartAt));
                             buildToken = false;
                         }
                         break;
@@ -105,20 +107,22 @@ namespace ArithmeticCalculator.Algorithms
                                 case SymbolType.OpeningBracket:
                                 case SymbolType.Letter:
                                     // treat '-' between operation and opening bracket or letter as (-1 * x)
-                                    tokens.Add(new NumberToken(-1));
-                                    tokens.Add(new OperationToken(OperationType.Multiply));
+                                    tokens.Add(new NumberToken(-1, symbolStartAt));
+                                    tokens.Add(new OperationToken(OperationType.Multiply, symbolStartAt));
                                     break;
                                 default:
-                                    throw new ParseException($"Invalid use of {NegativeSign}", i);
+                                    throw new ParseException($"Invalid use of {NegativeSign}", symbolStartAt);
                             }
                         }
                         else
                         {
-                            tokens.Add(new OperationToken(OperationTypeMap[symbol]));
+                            tokens.Add(new OperationToken(OperationTypeMap[symbol], symbolStartAt));
                         }
                         break;
+                    case SymbolType.Whitespace:
+                        break;
                     case SymbolType.Unknown:
-                        throw new UnknownSymbolException(symbol, i);
+                        throw new UnknownSymbolException(symbol, symbolStartAt);
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

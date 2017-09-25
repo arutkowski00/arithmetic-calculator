@@ -63,7 +63,7 @@ namespace ArithmeticCalculator.Algorithms
                     var a = numbersStack.Pop();
 
                     var result = calculateOperation(a.Value, b.Value);
-                    numbersStack.Push(new NumberToken(result));
+                    numbersStack.Push(new NumberToken(result, token.CharAt));
                 }
                 else if (token is StringToken)
                 {
@@ -85,7 +85,7 @@ namespace ArithmeticCalculator.Algorithms
                         throw new UnknownTokenValueException(stringToken);
                     }
 
-                    numbersStack.Push(new NumberToken(result));
+                    numbersStack.Push(new NumberToken(result, token.CharAt));
                 }
                 else
                 {

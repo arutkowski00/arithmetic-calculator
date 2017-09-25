@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tokens;
 
 namespace ArithmeticCalculator.Algorithms
@@ -60,6 +61,7 @@ namespace ArithmeticCalculator.Algorithms
                     }
                     else
                     {
+                        var openingFound = false;
                         while (operatorStack.Count > 0)
                         {
                             var tokenFromStack = operatorStack.Pop();
@@ -67,11 +69,23 @@ namespace ArithmeticCalculator.Algorithms
 
                             if (groupTokenFromStack != null &&
                                 groupTokenFromStack.Value == GroupTokenType.Opening)
+                            {
+                                openingFound = true;
                                 break;
+                            }
 
                             outputQueue.Enqueue(tokenFromStack);
                         }
+
+                        if (!openingFound)
+                        {
+                            throw new ParseException("Missing opening bracket", groupToken.CharAt); 
+                        }
                     }
+                }
+                else
+                {
+                    throw new UnsupportedTokenException(nameof(PostfixBuilder), infixToken);
                 }
             }
 

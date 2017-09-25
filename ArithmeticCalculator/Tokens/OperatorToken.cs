@@ -5,7 +5,7 @@
         public override bool IsNumber => false;
         public override bool IsOperator => true;
 
-        protected OperatorToken(T value) : base(value)
+        protected OperatorToken(T value, int charAt) : base(value, charAt)
         {
         }
     }
