@@ -14,6 +14,16 @@ namespace ArithmeticCalculator.Algorithms
             {OperationType.Exponent, 3},
         };
 
+        private readonly Dictionary<OperationType, OperationAssociativity> _operationAssociativity =
+            new Dictionary<OperationType, OperationAssociativity>
+            {
+                {OperationType.Add, OperationAssociativity.Left},
+                {OperationType.Subtract, OperationAssociativity.Left},
+                {OperationType.Multiply, OperationAssociativity.Left},
+                {OperationType.Divide, OperationAssociativity.Left},
+                {OperationType.Exponent, OperationAssociativity.Right},
+            };
+
         public IEnumerable<IToken> Build(IEnumerable<IToken> infixNotationTokens)
         {
             var outputQueue = new Queue<IToken>();
@@ -30,8 +40,7 @@ namespace ArithmeticCalculator.Algorithms
                     var operationToken = (OperationToken) infixToken;
 
                     while (operatorStack.Count > 0 &&
-                           !ReferenceEquals(operationToken,
-                               GetOperatorWithGreaterPrecedence(operationToken, operatorStack.Peek())))
+                           !CanPushOperationTokenToStack(operationToken, operatorStack))
                     {
                         outputQueue.Enqueue(operatorStack.Pop());
                     }
@@ -70,17 +79,45 @@ namespace ArithmeticCalculator.Algorithms
             return outputQueue;
         }
 
-        private IToken GetOperatorWithGreaterPrecedence(IToken a, IToken b)
+        private bool CanPushOperationTokenToStack(OperationToken operationToken, Stack<IToken> operatorStack)
         {
-            if (!(b is OperationToken)) return a;
-            if (!(a is OperationToken)) return b;
-
-            var aOperation = ((OperationToken) a).Value;
-            var bOperation = ((OperationToken) b).Value;
-
-            return _operationPrecedences[aOperation] > _operationPrecedences[bOperation]
-                ? a
-                : b;
+            var precedence = GetOperationPrecedence(operationToken, operatorStack.Peek());
+            var associativity = _operationAssociativity[operationToken.Value];
+            var canPush = precedence > 0 ||
+                          precedence == 0 && associativity == OperationAssociativity.Right;
+            return canPush;
         }
+
+        /// <summary>
+        /// Returns:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>positive number</term>
+        /// <description>if <paramref name="operation"/> has greater precedence than <paramref name="compareTo"/></description>
+        /// </item>
+        /// <item>
+        /// <term>0</term>
+        /// <description>if <paramref name="operation"/> has the same precedence as <paramref name="compareTo"/></description>
+        /// </item>
+        /// <item>
+        /// <term>negative number</term>
+        /// <description>if <paramref name="operation"/> has smaller precedence than <paramref name="compareTo"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns></returns>
+        private int GetOperationPrecedence(OperationToken operation, IToken compareTo)
+        {
+            var compareToOperation = compareTo as OperationToken;
+            if (compareToOperation == null) return 1;
+
+            return _operationPrecedences[operation.Value] - _operationPrecedences[compareToOperation.Value];
+        }
+    }
+
+    internal enum OperationAssociativity
+    {
+        Left,
+        Right
     }
 }
