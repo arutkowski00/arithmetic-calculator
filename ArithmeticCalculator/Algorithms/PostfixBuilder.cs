@@ -35,6 +35,10 @@ namespace ArithmeticCalculator.Algorithms
                 {
                     outputQueue.Enqueue(infixToken);
                 }
+                else if (infixToken is StringToken)
+                {
+                    operatorStack.Push(infixToken);
+                }
                 else if (infixToken is OperationToken)
                 {
                     var operationToken = (OperationToken) infixToken;
@@ -108,6 +112,8 @@ namespace ArithmeticCalculator.Algorithms
         /// <returns></returns>
         private int GetOperationPrecedence(OperationToken operation, IToken compareTo)
         {
+            if (compareTo is StringToken) return -1;
+            
             var compareToOperation = compareTo as OperationToken;
             if (compareToOperation == null) return 1;
 

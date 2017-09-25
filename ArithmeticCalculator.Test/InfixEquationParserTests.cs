@@ -28,7 +28,7 @@ namespace ArithmeticCalculator.Test
         {
             const string equation = "2 £ 2";
 
-            Assert.Throws<UnknownTokenException>(() => { _infixEquationParser.Parse(equation); });
+            Assert.Throws<UnknownSymbolException>(() => { _infixEquationParser.Parse(equation); });
         }
 
         [Test]

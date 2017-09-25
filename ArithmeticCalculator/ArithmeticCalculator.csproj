@@ -52,8 +52,8 @@
     <Compile Include="Algorithms\PostfixCalculator.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="Exceptions\ParseException.cs" />
-    <Compile Include="Exceptions\UnknownTokenException.cs" />
-    <Compile Include="Exceptions\UnsupportedSymbolException.cs" />
+    <Compile Include="Exceptions\UnknownSymbolException.cs" />
+    <Compile Include="Exceptions\UnknownTokenValueException.cs" />
     <Compile Include="Exceptions\UnsupportedTokenException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IocContainer.cs" />
@@ -68,6 +68,7 @@
     <Compile Include="Tokens\OperationType.cs" />
     <Compile Include="Tokens\OperatorToken.cs" />
     <Compile Include="SymbolType.cs" />
+    <Compile Include="Tokens\StringToken.cs" />
     <Compile Include="Tokens\ValueToken.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Extensions;
 using ArithmeticCalculator.Tokens;
@@ -64,7 +65,14 @@ namespace ArithmeticCalculator.Algorithms
                         tokens.Add(new GroupToken(GroupTokenType.Closing));
                         break;
                     case SymbolType.Letter:
-                        throw new UnsupportedSymbolException(nameof(InfixEquationParser), symbolType);
+                        buildToken = true;
+                        if (nextSymbolType != SymbolType.Letter)
+                        {
+                            var tokenString = tokenBuilder.ToString();
+                            tokens.Add(new StringToken(tokenString));
+                            buildToken = false;
+                        }
+                        break;
                     case SymbolType.Digit:
                         buildToken = true;
                         if (nextSymbolType != SymbolType.Digit)
@@ -110,7 +118,7 @@ namespace ArithmeticCalculator.Algorithms
                         }
                         break;
                     case SymbolType.Unknown:
-                        throw new UnknownTokenException(symbol, i);
+                        throw new UnknownSymbolException(symbol, i);
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

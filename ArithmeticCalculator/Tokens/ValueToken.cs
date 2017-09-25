@@ -6,6 +6,7 @@ namespace ArithmeticCalculator.Tokens
     {
         public abstract bool IsNumber { get; }
         public abstract bool IsOperator { get; }
+        object IValueToken.Value => Value;
         public T Value { get; }
         
         protected ValueToken(T value)
@@ -30,5 +31,6 @@ namespace ArithmeticCalculator.Tokens
         {
             return EqualityComparer<T>.Default.GetHashCode(Value);
         }
+
     }
 }
