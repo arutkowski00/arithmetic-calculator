@@ -66,7 +66,7 @@ namespace ArithmeticCalculator.Test.Data
             },
             Result = -3.5m
         };
-        
+
         public static readonly EquationTestDataItem Equation3 = new EquationTestDataItem
         {
             Equation = "4.25 / (-10 * [-5.5 + 25.5])",
@@ -96,10 +96,10 @@ namespace ArithmeticCalculator.Test.Data
             },
             Result = -0.02125m
         };
-        
+
         public static readonly EquationTestDataItem Equation4 = new EquationTestDataItem
         {
-            Equation = "-2^3^2",
+            Equation = "-2 ^ 3 ^ 2",
             InfixTokens = new IToken[]
             {
                 new NumberToken(-2),
@@ -118,30 +118,71 @@ namespace ArithmeticCalculator.Test.Data
             },
             Result = -512
         };
+        
+        public static readonly EquationTestDataItem Equation5 = new EquationTestDataItem
+        {
+            Equation = "1 - 2 + 3 + 4 - 5 - 6 + 7",
+            InfixTokens = new IToken[]
+            {
+                new NumberToken(1),
+                new OperationToken(OperationType.Subtract),
+                new NumberToken(2),
+                new OperationToken(OperationType.Add),
+                new NumberToken(3),
+                new OperationToken(OperationType.Add),
+                new NumberToken(4),
+                new OperationToken(OperationType.Subtract),
+                new NumberToken(5),
+                new OperationToken(OperationType.Subtract),
+                new NumberToken(6),
+                new OperationToken(OperationType.Add),
+                new NumberToken(7),
+            },
+            PostfixTokens = new IToken[]
+            {
+                new NumberToken(1),
+                new NumberToken(2),
+                new OperationToken(OperationType.Subtract),
+                new NumberToken(3),
+                new OperationToken(OperationType.Add),
+                new NumberToken(4),
+                new OperationToken(OperationType.Add),
+                new NumberToken(5),
+                new OperationToken(OperationType.Subtract),
+                new NumberToken(6),
+                new OperationToken(OperationType.Subtract),
+                new NumberToken(7),
+                new OperationToken(OperationType.Add),
+            },
+            Result = 2
+        };
 
         public static readonly EquationTestDataItem[] EquationTestDataItems =
         {
             Equation1,
             Equation2,
             Equation3,
-            Equation4
+            Equation4,
+            Equation5,
         };
-        
+
         public static IEnumerable EquationToInfixTestCases
         {
             get
             {
                 return EquationTestDataItems.Select(x =>
-                    new TestCaseData(x.Equation, x.InfixTokens));
+                    new TestCaseData(x.Equation, x.InfixTokens)
+                        .SetName(x.Equation));
             }
         }
-        
+
         public static IEnumerable InfixToPostfixTestCases
         {
             get
             {
                 return EquationTestDataItems.Select(x =>
-                    new TestCaseData(x.InfixTokens, x.PostfixTokens));
+                    new TestCaseData(x.InfixTokens, x.PostfixTokens)
+                        .SetName(x.Equation));
             }
         }
 
@@ -150,8 +191,8 @@ namespace ArithmeticCalculator.Test.Data
             get
             {
                 return EquationTestDataItems.Select(x =>
-                    new TestCaseData(x.PostfixTokens, x.Result));
-
+                    new TestCaseData(x.PostfixTokens, x.Result)
+                        .SetName(x.Equation));
             }
         }
     }
