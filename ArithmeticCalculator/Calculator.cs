@@ -18,10 +18,9 @@ namespace ArithmeticCalculator
 
         public double Calculate(string equation)
         {
-            var parsedEquation = _equationParser.Parse(equation);
-            // TODO: analyse parsed equation
-            var rpNotation = _postfixBuilder.Build(parsedEquation);
-            var result = _postfixCalculator.Calculate(rpNotation);
+            var infixTokens = _equationParser.Parse(equation);
+            var postfixTokens = _postfixBuilder.Build(infixTokens);
+            var result = _postfixCalculator.Calculate(postfixTokens);
 
             return result;
         }
