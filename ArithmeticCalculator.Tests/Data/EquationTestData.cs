@@ -3,7 +3,7 @@ using System.Linq;
 using ArithmeticCalculator.Tokens;
 using NUnit.Framework;
 
-namespace ArithmeticCalculator.Test.Data
+namespace ArithmeticCalculator.Tests.Data
 {
     public static class EquationTestData
     {

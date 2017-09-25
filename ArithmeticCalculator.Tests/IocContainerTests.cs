@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace ArithmeticCalculator.Test
+namespace ArithmeticCalculator.Tests
 {
     [TestFixture]
     public class IocContainerTests

@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Console -Version 3.7.0 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release ArithmeticCalculator.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./ArithmeticCalculator.Test/bin/Release/ArithmeticCalculator.Test.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe ./ArithmeticCalculator.Tests/bin/Release/ArithmeticCalculator.Tests.dll

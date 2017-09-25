@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ArithmeticCalculator.Algorithms;
-using ArithmeticCalculator.Test.Data;
-using ArithmeticCalculator.Test.Helpers;
+using ArithmeticCalculator.Tests.Data;
+using ArithmeticCalculator.Tests.Helpers;
 using ArithmeticCalculator.Tokens;
 using NUnit.Framework;
 
-namespace ArithmeticCalculator.Test
+namespace ArithmeticCalculator.Tests
 {
     [TestFixture]
     public class PostfixCalculatorTests

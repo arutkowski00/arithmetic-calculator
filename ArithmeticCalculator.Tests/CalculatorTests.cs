@@ -4,7 +4,7 @@ using ArithmeticCalculator.Tokens;
 using Moq;
 using NUnit.Framework;
 
-namespace ArithmeticCalculator.Test
+namespace ArithmeticCalculator.Tests
 {
     [TestFixture]
     public class CalculatorTests

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ArithmeticCalculator.Tokens;
 
-namespace ArithmeticCalculator.Test.Data
+namespace ArithmeticCalculator.Tests.Data
 {
     public class EquationTestDataItem
     {
