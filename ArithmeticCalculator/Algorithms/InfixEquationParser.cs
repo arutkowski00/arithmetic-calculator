@@ -79,8 +79,8 @@ namespace ArithmeticCalculator.Algorithms
                         {
                             var tokenString = tokenBuilder.ToString();
 
-                            decimal number;
-                            if (!decimal.TryParse(tokenString,
+                            double number;
+                            if (!double.TryParse(tokenString,
                                 NumberStyles.Number,
                                 CultureInfo.CurrentCulture,
                                 out number))

@@ -14,7 +14,7 @@ namespace ArithmeticCalculator.Test
         private readonly PostfixCalculator _postfixCalculator = new PostfixCalculator();
 
         [Test, TestCaseSource(typeof(EquationTestData), nameof(EquationTestData.PostfixToResultTestCases))]
-        public void DoesBuildPostfixTokensFromInfixTokens(IList<IToken> postfixTokens, decimal expectedResult)
+        public void DoesBuildPostfixTokensFromInfixTokens(IList<IToken> postfixTokens, double expectedResult)
         {
             var result = _postfixCalculator.Calculate(postfixTokens);
 

@@ -7,9 +7,9 @@ namespace ArithmeticCalculator.Algorithms
 {
     public class PostfixCalculator : IPostfixCalculator
     {
-        public delegate decimal CalculateOperationCallback(decimal x, decimal y);
+        public delegate double CalculateOperationCallback(double x, double y);
 
-        public delegate decimal CalculateFunctionCallback(decimal x);
+        public delegate double CalculateFunctionCallback(double x);
 
         private readonly Dictionary<OperationType, CalculateOperationCallback> _operationTypeFuncs =
             new Dictionary<OperationType, CalculateOperationCallback>
@@ -18,7 +18,7 @@ namespace ArithmeticCalculator.Algorithms
                 {OperationType.Subtract, (x, y) => x - y},
                 {OperationType.Multiply, (x, y) => x * y},
                 {OperationType.Divide, (x, y) => x / y},
-                {OperationType.Exponent, (x, y) => (decimal) Math.Pow((double) x, (double) y)},
+                {OperationType.Exponent, Math.Pow}
             };
 
         private readonly Dictionary<string, CalculateFunctionCallback> _stringFuncs =
@@ -26,23 +26,23 @@ namespace ArithmeticCalculator.Algorithms
             {
                 {"abs", Math.Abs},
                 {"ceiling", Math.Ceiling},
-                {"cos", (x) => (decimal) Math.Cos((double) x)},
+                {"cos", Math.Cos},
                 {"floor", Math.Floor},
-                {"ln", (x) => (decimal) Math.Log((double) x, Math.E)},
+                {"ln", x => Math.Log(x, Math.E)},
                 {"round", Math.Round},
-                {"sign", (x) => (decimal) Math.Sign((double) x)},
-                {"sin", (x) => (decimal) Math.Sin((double) x)},
-                {"sqrt", (x) => (decimal) Math.Sqrt((double) x)}
+                {"sign", x => Math.Sign(x)},
+                {"sin", Math.Sin},
+                {"sqrt", Math.Sqrt}
             };
 
-        private readonly Dictionary<string, decimal> _stringConsts =
-            new Dictionary<string, decimal>
+        private readonly Dictionary<string, double> _stringConsts =
+            new Dictionary<string, double>
             {
-                {"E", (decimal) Math.E},
-                {"PI", (decimal) Math.PI},
+                {"E", Math.E},
+                {"PI", Math.PI}
             };
 
-        public decimal Calculate(IEnumerable<IToken> reversePolishNotationTokens)
+        public double Calculate(IEnumerable<IToken> reversePolishNotationTokens)
         {
             var numbersStack = new Stack<NumberToken>();
 
@@ -68,7 +68,7 @@ namespace ArithmeticCalculator.Algorithms
                 else if (token is StringToken)
                 {
                     var stringToken = (StringToken) token;
-                    decimal result;
+                    double result;
 
                     if (_stringFuncs.ContainsKey(stringToken.Value))
                     {

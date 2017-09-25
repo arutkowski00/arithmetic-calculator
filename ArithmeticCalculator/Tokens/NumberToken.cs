@@ -1,11 +1,11 @@
 ﻿namespace ArithmeticCalculator.Tokens
 {
-    public class NumberToken : ValueToken<decimal>
+    public class NumberToken : ValueToken<double>
     {
         public override bool IsNumber => true;
         public override bool IsOperator => false;
 
-        public NumberToken(decimal value) : base(value)
+        public NumberToken(double value) : base(value)
         {
         }
     }

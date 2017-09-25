@@ -16,7 +16,7 @@ namespace ArithmeticCalculator
             _equationParser = equationParser;
         }
 
-        public decimal Calculate(string equation)
+        public double Calculate(string equation)
         {
             var parsedEquation = _equationParser.Parse(equation);
             // TODO: analyse parsed equation

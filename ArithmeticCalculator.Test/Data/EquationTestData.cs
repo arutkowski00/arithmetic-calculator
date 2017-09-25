@@ -32,7 +32,7 @@ namespace ArithmeticCalculator.Test.Data
                 new OperationToken(OperationType.Multiply),
                 new OperationToken(OperationType.Add),
             },
-            Result = 3.5m
+            Result = 3.5
         };
 
         public static readonly EquationTestDataItem Equation2 = new EquationTestDataItem
@@ -64,7 +64,7 @@ namespace ArithmeticCalculator.Test.Data
                 new OperationToken(OperationType.Multiply),
                 new OperationToken(OperationType.Add),
             },
-            Result = -3.5m
+            Result = -3.5
         };
 
         public static readonly EquationTestDataItem Equation3 = new EquationTestDataItem
@@ -72,29 +72,29 @@ namespace ArithmeticCalculator.Test.Data
             Equation = "4.25 / (-10 * [-5.5 + 25.5])",
             InfixTokens = new IToken[]
             {
-                new NumberToken(4.25m),
+                new NumberToken(4.25),
                 new OperationToken(OperationType.Divide),
                 new GroupToken(GroupTokenType.Opening),
                 new NumberToken(-10),
                 new OperationToken(OperationType.Multiply),
                 new GroupToken(GroupTokenType.Opening),
-                new NumberToken(-5.5m),
+                new NumberToken(-5.5),
                 new OperationToken(OperationType.Add),
-                new NumberToken(25.5m),
+                new NumberToken(25.5),
                 new GroupToken(GroupTokenType.Closing),
                 new GroupToken(GroupTokenType.Closing),
             },
             PostfixTokens = new IToken[]
             {
-                new NumberToken(4.25m),
+                new NumberToken(4.25),
                 new NumberToken(-10),
-                new NumberToken(-5.5m),
-                new NumberToken(25.5m),
+                new NumberToken(-5.5),
+                new NumberToken(25.5),
                 new OperationToken(OperationType.Add),
                 new OperationToken(OperationType.Multiply),
                 new OperationToken(OperationType.Divide),
             },
-            Result = -0.02125m
+            Result = -0.02125
         };
 
         public static readonly EquationTestDataItem Equation4 = new EquationTestDataItem
@@ -189,7 +189,7 @@ namespace ArithmeticCalculator.Test.Data
                 new StringToken("ln"),
                 new OperationToken(OperationType.Add),
             },
-            Result = 1.5m
+            Result = 1.5
         };
 
         public static readonly EquationTestDataItem[] EquationTestDataItems =

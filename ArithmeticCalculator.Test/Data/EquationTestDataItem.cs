@@ -8,6 +8,6 @@ namespace ArithmeticCalculator.Test.Data
         public string Equation { get; set; }
         public IToken[] InfixTokens { get; set; }
         public IToken[] PostfixTokens { get; set; }
-        public decimal Result { get; set; }
+        public double Result { get; set; }
     }
 }

@@ -5,6 +5,6 @@ namespace ArithmeticCalculator.Algorithms
 {
     public interface IPostfixCalculator
     {
-        decimal Calculate(IEnumerable<IToken> reversePolishNotationTokens);
+        double Calculate(IEnumerable<IToken> reversePolishNotationTokens);
     }
 }
