@@ -3,7 +3,7 @@
     public class UnknownSymbolException : ParseException
     {
         public UnknownSymbolException(char token, int column)
-            : base($"Unknown token: {token}", column)
+            : base($"Unknown symbol: {token}", column)
         {
         }
     }

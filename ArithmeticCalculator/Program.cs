@@ -34,6 +34,20 @@ namespace ArithmeticCalculator
                 {
                     WriteError("[ERROR] {0}", ex.Message);
                 }
+                catch (AggregateException ex)
+                {
+                    foreach (var innerEx in ex.InnerExceptions)
+                    {
+                        if (innerEx is ParseException)
+                        {
+                            WriteError("[ERROR] {0}", innerEx.Message);
+                        }
+                        else
+                        {
+                            WriteError("[FATAL] {0}", innerEx.ToString());
+                        }
+                    }
+                }
                 catch (Exception ex)
                 {
                     WriteError("[FATAL] {0}", ex.ToString());

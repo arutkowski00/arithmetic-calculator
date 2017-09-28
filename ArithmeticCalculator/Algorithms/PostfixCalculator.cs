@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tokens;
 
@@ -59,6 +60,11 @@ namespace ArithmeticCalculator.Algorithms
                     var operationToken = (OperationToken) token;
                     var calculateOperation = _operationTypeFuncs[operationToken.Value];
 
+                    if (numbersStack.Count < 2)
+                    {
+                        throw new ParseException($"Invalid operator usage", token.CharAt);
+                    }
+
                     // Order is important!
                     var b = numbersStack.Pop();
                     var a = numbersStack.Pop();
@@ -94,14 +100,14 @@ namespace ArithmeticCalculator.Algorithms
                 }
             }
 
-            if (numbersStack.Count != 1)
-            {
-                throw new ArgumentException(
-                    $"Invalid reverse polish notation: there are still {numbersStack.Count} numbers to calculate, but no operations left.\nStack: {numbersStack}",
-                    nameof(reversePolishNotationTokens));
-            }
+            if (numbersStack.Count == 1)
+                return numbersStack.Pop().Value;
 
-            return numbersStack.Pop().Value;
+            var exceptions = numbersStack
+                .OrderBy(t => t.CharAt)
+                .Select(t => new ParseException("Unexpected number", t.CharAt));
+
+            throw new AggregateException(exceptions);
         }
     }
 }
