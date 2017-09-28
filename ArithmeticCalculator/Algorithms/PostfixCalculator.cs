@@ -18,6 +18,7 @@ namespace ArithmeticCalculator.Algorithms
                 {OperationType.Subtract, (x, y) => x - y},
                 {OperationType.Multiply, (x, y) => x * y},
                 {OperationType.Divide, (x, y) => x / y},
+                {OperationType.Modulo, (x, y) => x % y},
                 {OperationType.Exponent, Math.Pow}
             };
 

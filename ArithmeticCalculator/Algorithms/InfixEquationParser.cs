@@ -23,6 +23,7 @@ namespace ArithmeticCalculator.Algorithms
             {'-', OperationType.Subtract},
             {'*', OperationType.Multiply},
             {'/', OperationType.Divide},
+            {'%', OperationType.Modulo},
             {'^', OperationType.Exponent},
         };
 

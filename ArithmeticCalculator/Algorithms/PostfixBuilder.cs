@@ -12,6 +12,7 @@ namespace ArithmeticCalculator.Algorithms
             {OperationType.Subtract, 1},
             {OperationType.Multiply, 2},
             {OperationType.Divide, 2},
+            {OperationType.Modulo, 2},
             {OperationType.Exponent, 3},
         };
 
@@ -22,6 +23,7 @@ namespace ArithmeticCalculator.Algorithms
                 {OperationType.Subtract, OperationAssociativity.Left},
                 {OperationType.Multiply, OperationAssociativity.Left},
                 {OperationType.Divide, OperationAssociativity.Left},
+                {OperationType.Modulo, OperationAssociativity.Left},
                 {OperationType.Exponent, OperationAssociativity.Right},
             };
 
