@@ -4,7 +4,7 @@
 ## Features
 - interactively solve arithmetic problems using simple infix notation
 - use popular mathematic functions (sin,  log,  sqrt etc.)
-- history of equations (accessible by pressing the Up Arrow, just like in any other shell)
+- history of equations (accessible by pressing the Up Arrow, just like in any other shell) - Windows only
 - Unit Tested™
 
 ## How it works
