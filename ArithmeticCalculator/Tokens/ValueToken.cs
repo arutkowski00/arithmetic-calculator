@@ -2,7 +2,7 @@
 
 namespace ArithmeticCalculator.Tokens
 {
-    public abstract class ValueToken<T> : BaseToken, IValueToken<T>
+    public abstract class ValueToken<T> : Token, IValueToken<T>
     {
         object IValueToken.Value => Value;
         public abstract T Value { get; }

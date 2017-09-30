@@ -1,6 +1,6 @@
 ﻿namespace ArithmeticCalculator.Tokens
 {
-    public abstract class OperatorToken : BaseToken
+    public abstract class OperatorToken : Token
     {
         public abstract char Symbol { get; }
 

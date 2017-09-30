@@ -1,15 +1,15 @@
 ﻿namespace ArithmeticCalculator.Tokens
 {
-    public abstract class BaseToken : IToken
+    public abstract class Token : IToken
     {
         public int CharAt { get; }
         
-        protected BaseToken(int charAt)
+        protected Token(int charAt)
         {
             CharAt = charAt;
         }
 
-        protected bool Equals(BaseToken other)
+        protected bool Equals(Token other)
         {
             return CharAt == other.CharAt;
         }
@@ -19,7 +19,7 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((BaseToken) obj);
+            return Equals((Token) obj);
         }
 
         public override int GetHashCode()
