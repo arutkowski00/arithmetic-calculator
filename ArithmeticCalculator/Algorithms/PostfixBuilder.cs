@@ -71,7 +71,7 @@ namespace ArithmeticCalculator.Algorithms
             return outputQueue;
         }
 
-        private bool CanPushOperationTokenToStack(OperationToken operationToken, Stack<IToken> operatorStack)
+        private static bool CanPushOperationTokenToStack(OperationToken operationToken, Stack<IToken> operatorStack)
         {
             var precedence = GetOperationPrecedence(operationToken, operatorStack.Peek());
             var canPush = precedence > 0 ||
@@ -97,7 +97,7 @@ namespace ArithmeticCalculator.Algorithms
         /// </list>
         /// </summary>
         /// <returns></returns>
-        private int GetOperationPrecedence(OperationToken operation, IToken compareTo)
+        private static int GetOperationPrecedence(OperationToken operation, IToken compareTo)
         {
             if (compareTo is StringToken) return -1;
 
@@ -106,11 +106,5 @@ namespace ArithmeticCalculator.Algorithms
 
             return operation.Precedence - compareToOperation.Precedence;
         }
-    }
-
-    public enum OperationAssociativity
-    {
-        Left,
-        Right
     }
 }

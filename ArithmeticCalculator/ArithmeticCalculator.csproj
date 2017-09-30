@@ -48,6 +48,7 @@
     <Compile Include="Algorithms\IEquationParser.cs" />
     <Compile Include="Algorithms\IPostfixBuilder.cs" />
     <Compile Include="Algorithms\IPostfixCalculator.cs" />
+    <Compile Include="Algorithms\OperationAssociativity.cs" />
     <Compile Include="Algorithms\PostfixBuilder.cs" />
     <Compile Include="Algorithms\PostfixCalculator.cs" />
     <Compile Include="Calculator.cs" />
@@ -55,7 +56,6 @@
     <Compile Include="Exceptions\UnknownSymbolException.cs" />
     <Compile Include="Exceptions\UnknownTokenValueException.cs" />
     <Compile Include="Exceptions\UnsupportedTokenException.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IocContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
