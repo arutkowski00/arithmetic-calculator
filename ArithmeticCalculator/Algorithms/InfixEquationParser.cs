@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using ArithmeticCalculator.Exceptions;
-using ArithmeticCalculator.Extensions;
 using ArithmeticCalculator.Tokens;
+using ArithmeticCalculator.Tokens.OperationTokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
@@ -17,25 +16,28 @@ namespace ArithmeticCalculator.Algorithms
         private static readonly char[] ClosingBrackets = {']', ')'};
         private static readonly char[] DigitSymbols = {'.', ','};
 
-        private static readonly Dictionary<char, OperationType> OperationTypeMap = new Dictionary<char, OperationType>
-        {
-            {'+', OperationType.Add},
-            {'-', OperationType.Subtract},
-            {'*', OperationType.Multiply},
-            {'/', OperationType.Divide},
-            {'%', OperationType.Modulo},
-            {'^', OperationType.Exponent},
-        };
+        private delegate OperationToken OperationTokenFactoryDelegate(int charAt);
+
+        private static readonly Dictionary<char, OperationTokenFactoryDelegate> OperationTokenMap
+            = new Dictionary<char, OperationTokenFactoryDelegate>
+            {
+                {'+', charAt => new AddOperationToken(charAt)},
+                {'-', charAt => new SubtractOperationToken(charAt)},
+                {'*', charAt => new MultiplyOperationToken(charAt)},
+                {'/', charAt => new DivideOperationToken(charAt)},
+                {'%', charAt => new ModuloOperationToken(charAt)},
+                {'^', charAt => new ExponentOperationToken(charAt)}
+            };
 
         private readonly Dictionary<SymbolType, Func<char, bool>> _symbolMap =
             new Dictionary<SymbolType, Func<char, bool>>
             {
                 {SymbolType.OpeningBracket, OpeningBrackets.Contains},
                 {SymbolType.ClosingBracket, ClosingBrackets.Contains},
-                {SymbolType.Operator, OperationTypeMap.Keys.Contains},
+                {SymbolType.Operator, OperationTokenMap.Keys.Contains},
                 {SymbolType.Letter, char.IsLetter},
-                {SymbolType.Digit, (c) => char.IsDigit(c) || DigitSymbols.Contains(c)},
-                {SymbolType.Whitespace, char.IsWhiteSpace},
+                {SymbolType.Digit, c => char.IsDigit(c) || DigitSymbols.Contains(c)},
+                {SymbolType.Whitespace, char.IsWhiteSpace}
             };
 
         public IEnumerable<IToken> Parse(string equation)
@@ -109,7 +111,7 @@ namespace ArithmeticCalculator.Algorithms
                                 case SymbolType.Letter:
                                     // treat '-' between operation and opening bracket or letter as (-1 * x)
                                     tokens.Add(new NumberToken(-1, symbolStartAt));
-                                    tokens.Add(new OperationToken(OperationType.Multiply, symbolStartAt));
+                                    tokens.Add(new MultiplyOperationToken(symbolStartAt));
                                     break;
                                 default:
                                     throw new ParseException($"Invalid use of {NegativeSign}", symbolStartAt);
@@ -117,7 +119,7 @@ namespace ArithmeticCalculator.Algorithms
                         }
                         else
                         {
-                            tokens.Add(new OperationToken(OperationTypeMap[symbol], symbolStartAt));
+                            tokens.Add(OperationTokenMap[symbol](symbolStartAt));
                         }
                         break;
                     case SymbolType.Whitespace:

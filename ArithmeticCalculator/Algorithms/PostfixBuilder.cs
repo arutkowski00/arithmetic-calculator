@@ -6,27 +6,6 @@ namespace ArithmeticCalculator.Algorithms
 {
     public class PostfixBuilder : IPostfixBuilder
     {
-        private readonly Dictionary<OperationType, int> _operationPrecedences = new Dictionary<OperationType, int>
-        {
-            {OperationType.Add, 1},
-            {OperationType.Subtract, 1},
-            {OperationType.Multiply, 2},
-            {OperationType.Divide, 2},
-            {OperationType.Modulo, 2},
-            {OperationType.Exponent, 3},
-        };
-
-        private readonly Dictionary<OperationType, OperationAssociativity> _operationAssociativity =
-            new Dictionary<OperationType, OperationAssociativity>
-            {
-                {OperationType.Add, OperationAssociativity.Left},
-                {OperationType.Subtract, OperationAssociativity.Left},
-                {OperationType.Multiply, OperationAssociativity.Left},
-                {OperationType.Divide, OperationAssociativity.Left},
-                {OperationType.Modulo, OperationAssociativity.Left},
-                {OperationType.Exponent, OperationAssociativity.Right},
-            };
-
         public IEnumerable<IToken> Build(IEnumerable<IToken> infixNotationTokens)
         {
             var outputQueue = new Queue<IToken>();
@@ -102,9 +81,8 @@ namespace ArithmeticCalculator.Algorithms
         private bool CanPushOperationTokenToStack(OperationToken operationToken, Stack<IToken> operatorStack)
         {
             var precedence = GetOperationPrecedence(operationToken, operatorStack.Peek());
-            var associativity = _operationAssociativity[operationToken.Value];
             var canPush = precedence > 0 ||
-                          precedence == 0 && associativity == OperationAssociativity.Right;
+                          precedence == 0 && operationToken.Associativity == OperationAssociativity.Right;
             return canPush;
         }
 
@@ -133,11 +111,11 @@ namespace ArithmeticCalculator.Algorithms
             var compareToOperation = compareTo as OperationToken;
             if (compareToOperation == null) return 1;
 
-            return _operationPrecedences[operation.Value] - _operationPrecedences[compareToOperation.Value];
+            return operation.Precedence - compareToOperation.Precedence;
         }
     }
 
-    internal enum OperationAssociativity
+    public enum OperationAssociativity
     {
         Left,
         Right

@@ -4,8 +4,9 @@
     {
         public override bool IsNumber => false;
         public override bool IsOperator => true;
+        public abstract char Symbol { get; }
 
-        protected OperatorToken(T value, int charAt) : base(value, charAt)
+        protected OperatorToken(int charAt) : base(charAt)
         {
         }
     }

@@ -5,12 +5,11 @@ namespace ArithmeticCalculator.Tokens
     public abstract class ValueToken<T> : BaseToken, IValueToken<T>
     {
         object IValueToken.Value => Value;
-        public T Value { get; }
+        public abstract T Value { get; }
 
-        protected ValueToken(T value, int charAt)
+        protected ValueToken(int charAt)
             : base(charAt)
         {
-            Value = value;
         }
 
         protected bool Equals(ValueToken<T> other)

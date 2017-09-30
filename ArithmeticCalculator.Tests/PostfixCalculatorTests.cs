@@ -4,6 +4,7 @@ using ArithmeticCalculator.Algorithms;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tests.Data;
 using ArithmeticCalculator.Tokens;
+using ArithmeticCalculator.Tokens.OperationTokens;
 using NUnit.Framework;
 
 namespace ArithmeticCalculator.Tests
@@ -29,7 +30,7 @@ namespace ArithmeticCalculator.Tests
             {
                 new NumberToken(2, 1),
                 new NumberToken(2, 3),
-                new OperationToken(OperationType.Add, 5),
+                new AddOperationToken(5),
                 new NumberToken(2, 7)
             };
             
@@ -43,8 +44,8 @@ namespace ArithmeticCalculator.Tests
             var tokens = new IToken[]
             {
                 new NumberToken(2, 1),
-                new OperationToken(OperationType.Multiply, 3),
-                new OperationToken(OperationType.Divide, 5),
+                new MultiplyOperationToken(3),
+                new DivideOperationToken(5),
                 new NumberToken(2, 7)
             };
             

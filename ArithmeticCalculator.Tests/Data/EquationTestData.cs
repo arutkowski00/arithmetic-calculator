@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using ArithmeticCalculator.Tokens;
+using ArithmeticCalculator.Tokens.OperationTokens;
 using NUnit.Framework;
 
 namespace ArithmeticCalculator.Tests.Data
@@ -13,13 +14,13 @@ namespace ArithmeticCalculator.Tests.Data
             InfixTokens = new IToken[]
             {
                 new NumberToken(2, 1),
-                new OperationToken(OperationType.Add, 3),
+                new AddOperationToken(3),
                 new GroupToken(GroupTokenType.Opening, 5),
                 new NumberToken(4, 6),
-                new OperationToken(OperationType.Divide, 8),
+                new DivideOperationToken(8),
                 new NumberToken(8, 10),
                 new GroupToken(GroupTokenType.Closing, 11),
-                new OperationToken(OperationType.Multiply, 13),
+                new MultiplyOperationToken(13),
                 new NumberToken(3, 15),
             },
             PostfixTokens = new IToken[]
@@ -27,10 +28,10 @@ namespace ArithmeticCalculator.Tests.Data
                 new NumberToken(2, 1),
                 new NumberToken(4, 6),
                 new NumberToken(8, 10),
-                new OperationToken(OperationType.Divide, 8),
+                new DivideOperationToken(8),
                 new NumberToken(3, 15),
-                new OperationToken(OperationType.Multiply, 13),
-                new OperationToken(OperationType.Add, 3),
+                new MultiplyOperationToken(13),
+                new AddOperationToken(3),
             },
             Result = 3.5
         };
@@ -41,14 +42,14 @@ namespace ArithmeticCalculator.Tests.Data
             InfixTokens = new IToken[]
             {
                 new NumberToken(-2, 1),
-                new OperationToken(OperationType.Add, 4),
+                new AddOperationToken(4),
                 new NumberToken(-3, 6),
-                new OperationToken(OperationType.Multiply, 9),
+                new MultiplyOperationToken(9),
                 new NumberToken(-1, 11),
-                new OperationToken(OperationType.Multiply, 11),
+                new MultiplyOperationToken(11),
                 new GroupToken(GroupTokenType.Opening, 12),
                 new NumberToken(-4, 13),
-                new OperationToken(OperationType.Divide, 16),
+                new DivideOperationToken(16),
                 new NumberToken(8, 18),
                 new GroupToken(GroupTokenType.Closing, 19),
             },
@@ -57,12 +58,12 @@ namespace ArithmeticCalculator.Tests.Data
                 new NumberToken(-2, 1),
                 new NumberToken(-3, 6),
                 new NumberToken(-1, 11),
-                new OperationToken(OperationType.Multiply, 9),
+                new MultiplyOperationToken(9),
                 new NumberToken(-4, 13),
                 new NumberToken(8, 18),
-                new OperationToken(OperationType.Divide, 16),
-                new OperationToken(OperationType.Multiply, 11),
-                new OperationToken(OperationType.Add, 4),
+                new DivideOperationToken(16),
+                new MultiplyOperationToken(11),
+                new AddOperationToken(4),
             },
             Result = -3.5
         };
@@ -73,13 +74,13 @@ namespace ArithmeticCalculator.Tests.Data
             InfixTokens = new IToken[]
             {
                 new NumberToken(4.25, 1),
-                new OperationToken(OperationType.Divide, 6),
+                new DivideOperationToken(6),
                 new GroupToken(GroupTokenType.Opening, 8),
                 new NumberToken(-10, 9),
-                new OperationToken(OperationType.Multiply, 13),
+                new MultiplyOperationToken(13),
                 new GroupToken(GroupTokenType.Opening, 15),
                 new NumberToken(-5.5, 16),
-                new OperationToken(OperationType.Add, 21),
+                new AddOperationToken(21),
                 new NumberToken(25.5, 23),
                 new GroupToken(GroupTokenType.Closing, 27),
                 new GroupToken(GroupTokenType.Closing, 28),
@@ -90,9 +91,9 @@ namespace ArithmeticCalculator.Tests.Data
                 new NumberToken(-10, 9),
                 new NumberToken(-5.5, 16),
                 new NumberToken(25.5, 23),
-                new OperationToken(OperationType.Add, 21),
-                new OperationToken(OperationType.Multiply, 13),
-                new OperationToken(OperationType.Divide, 6),
+                new AddOperationToken(21),
+                new MultiplyOperationToken(13),
+                new DivideOperationToken(6),
             },
             Result = -0.02125
         };
@@ -103,9 +104,9 @@ namespace ArithmeticCalculator.Tests.Data
             InfixTokens = new IToken[]
             {
                 new NumberToken(-2, 1),
-                new OperationToken(OperationType.Exponent, 4),
+                new ExponentOperationToken(4),
                 new NumberToken(3, 6),
-                new OperationToken(OperationType.Exponent, 8),
+                new ExponentOperationToken(8),
                 new NumberToken(2, 10),
             },
             PostfixTokens = new IToken[]
@@ -113,8 +114,8 @@ namespace ArithmeticCalculator.Tests.Data
                 new NumberToken(-2, 1),
                 new NumberToken(3, 6),
                 new NumberToken(2, 10),
-                new OperationToken(OperationType.Exponent, 8),
-                new OperationToken(OperationType.Exponent, 4),
+                new ExponentOperationToken(8),
+                new ExponentOperationToken(4),
             },
             Result = -512
         };
@@ -125,38 +126,38 @@ namespace ArithmeticCalculator.Tests.Data
             InfixTokens = new IToken[]
             {
                 new NumberToken(1, 1),
-                new OperationToken(OperationType.Subtract, 3),
+                new SubtractOperationToken(3),
                 new NumberToken(2, 5),
-                new OperationToken(OperationType.Add, 7),
+                new AddOperationToken(7),
                 new StringToken("abs", 9),
                 new GroupToken(GroupTokenType.Opening, 12),
                 new NumberToken(-3, 13),
                 new GroupToken(GroupTokenType.Closing, 15),
-                new OperationToken(OperationType.Add, 17),
+                new AddOperationToken(17),
                 new NumberToken(4, 19),
-                new OperationToken(OperationType.Subtract, 21),
+                new SubtractOperationToken(21),
                 new NumberToken(5, 23),
-                new OperationToken(OperationType.Subtract, 25),
+                new SubtractOperationToken(25),
                 new NumberToken(6, 27),
-                new OperationToken(OperationType.Add, 29),
+                new AddOperationToken(29),
                 new NumberToken(7, 31),
             },
             PostfixTokens = new IToken[]
             {
                 new NumberToken(1, 1),
                 new NumberToken(2, 5),
-                new OperationToken(OperationType.Subtract, 3),
+                new SubtractOperationToken(3),
                 new NumberToken(-3, 13),
                 new StringToken("abs", 9),
-                new OperationToken(OperationType.Add, 7),
+                new AddOperationToken(7),
                 new NumberToken(4, 19),
-                new OperationToken(OperationType.Add, 17),
+                new AddOperationToken(17),
                 new NumberToken(5, 23),
-                new OperationToken(OperationType.Subtract, 21),
+                new SubtractOperationToken(21),
                 new NumberToken(6, 27),
-                new OperationToken(OperationType.Subtract, 25),
+                new SubtractOperationToken(25),
                 new NumberToken(7, 31),
-                new OperationToken(OperationType.Add, 29),
+                new AddOperationToken(29),
             },
             Result = 2
         };
@@ -169,10 +170,10 @@ namespace ArithmeticCalculator.Tests.Data
                 new StringToken("sin", 1),
                 new GroupToken(GroupTokenType.Opening, 4),
                 new StringToken("PI", 5),
-                new OperationToken(OperationType.Divide, 8),
+                new DivideOperationToken(8),
                 new NumberToken(6, 10),
                 new GroupToken(GroupTokenType.Closing, 11),
-                new OperationToken(OperationType.Add, 13),
+                new AddOperationToken(13),
                 new StringToken("ln", 15),
                 new GroupToken(GroupTokenType.Opening, 17),
                 new StringToken("E", 18),
@@ -183,11 +184,11 @@ namespace ArithmeticCalculator.Tests.Data
             {
                 new StringToken("PI", 5),
                 new NumberToken(6, 10),
-                new OperationToken(OperationType.Divide, 8),
+                new DivideOperationToken(8),
                 new StringToken("sin", 1),
                 new StringToken("E", 18),
                 new StringToken("ln", 15),
-                new OperationToken(OperationType.Add, 13),
+                new AddOperationToken(13),
             },
             Result = 1.5
         };
