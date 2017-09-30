@@ -6,6 +6,7 @@ using System.Text;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tokens;
 using ArithmeticCalculator.Tokens.OperationTokens;
+using ArithmeticCalculator.Tokens.OperatorTokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
@@ -64,10 +65,10 @@ namespace ArithmeticCalculator.Algorithms
                 switch (symbolType)
                 {
                     case SymbolType.OpeningBracket:
-                        tokens.Add(new GroupToken(GroupTokenType.Opening, symbolStartAt));
+                        tokens.Add(new GroupOpenOperatorToken(symbolStartAt));
                         break;
                     case SymbolType.ClosingBracket:
-                        tokens.Add(new GroupToken(GroupTokenType.Closing, symbolStartAt));
+                        tokens.Add(new GroupCloseOperatorToken(symbolStartAt));
                         break;
                     case SymbolType.Letter:
                         buildToken = true;

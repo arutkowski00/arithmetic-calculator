@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ArithmeticCalculator.Exceptions;
 using ArithmeticCalculator.Tokens;
+using ArithmeticCalculator.Tokens.OperatorTokens;
 
 namespace ArithmeticCalculator.Algorithms
 {
@@ -17,7 +18,8 @@ namespace ArithmeticCalculator.Algorithms
                 {
                     outputQueue.Enqueue(infixToken);
                 }
-                else if (infixToken is StringToken)
+                else if (infixToken is StringToken ||
+                         infixToken is GroupOpenOperatorToken)
                 {
                     operatorStack.Push(infixToken);
                 }
@@ -33,35 +35,26 @@ namespace ArithmeticCalculator.Algorithms
 
                     operatorStack.Push(operationToken);
                 }
-                else if (infixToken is GroupToken)
+                else if (infixToken is GroupCloseOperatorToken)
                 {
-                    var groupToken = (GroupToken) infixToken;
-                    if (groupToken.GroupTokenType == GroupTokenType.Opening)
+                    var openingFound = false;
+                    while (operatorStack.Count > 0)
                     {
-                        operatorStack.Push(groupToken);
+                        var tokenFromStack = operatorStack.Pop();
+
+                        if (tokenFromStack != null &&
+                            tokenFromStack is GroupOpenOperatorToken)
+                        {
+                            openingFound = true;
+                            break;
+                        }
+
+                        outputQueue.Enqueue(tokenFromStack);
                     }
-                    else
+
+                    if (!openingFound)
                     {
-                        var openingFound = false;
-                        while (operatorStack.Count > 0)
-                        {
-                            var tokenFromStack = operatorStack.Pop();
-                            var groupTokenFromStack = tokenFromStack as GroupToken;
-
-                            if (groupTokenFromStack != null &&
-                                groupTokenFromStack.GroupTokenType == GroupTokenType.Opening)
-                            {
-                                openingFound = true;
-                                break;
-                            }
-
-                            outputQueue.Enqueue(tokenFromStack);
-                        }
-
-                        if (!openingFound)
-                        {
-                            throw new ParseException("Missing opening bracket", groupToken.CharAt); 
-                        }
+                        throw new ParseException("Missing opening bracket", infixToken.CharAt);
                     }
                 }
                 else
@@ -107,7 +100,7 @@ namespace ArithmeticCalculator.Algorithms
         private int GetOperationPrecedence(OperationToken operation, IToken compareTo)
         {
             if (compareTo is StringToken) return -1;
-            
+
             var compareToOperation = compareTo as OperationToken;
             if (compareToOperation == null) return 1;
 

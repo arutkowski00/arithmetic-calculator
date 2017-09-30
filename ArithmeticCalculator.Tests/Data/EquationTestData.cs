@@ -2,6 +2,7 @@
 using System.Linq;
 using ArithmeticCalculator.Tokens;
 using ArithmeticCalculator.Tokens.OperationTokens;
+using ArithmeticCalculator.Tokens.OperatorTokens;
 using NUnit.Framework;
 
 namespace ArithmeticCalculator.Tests.Data
@@ -15,11 +16,11 @@ namespace ArithmeticCalculator.Tests.Data
             {
                 new NumberToken(2, 1),
                 new AddOperationToken(3),
-                new GroupToken(GroupTokenType.Opening, 5),
+                new GroupOpenOperatorToken(5),
                 new NumberToken(4, 6),
                 new DivideOperationToken(8),
                 new NumberToken(8, 10),
-                new GroupToken(GroupTokenType.Closing, 11),
+                new GroupCloseOperatorToken(11),
                 new MultiplyOperationToken(13),
                 new NumberToken(3, 15),
             },
@@ -47,11 +48,11 @@ namespace ArithmeticCalculator.Tests.Data
                 new MultiplyOperationToken(9),
                 new NumberToken(-1, 11),
                 new MultiplyOperationToken(11),
-                new GroupToken(GroupTokenType.Opening, 12),
+                new GroupOpenOperatorToken(12),
                 new NumberToken(-4, 13),
                 new DivideOperationToken(16),
                 new NumberToken(8, 18),
-                new GroupToken(GroupTokenType.Closing, 19),
+                new GroupCloseOperatorToken(19),
             },
             PostfixTokens = new IToken[]
             {
@@ -75,15 +76,15 @@ namespace ArithmeticCalculator.Tests.Data
             {
                 new NumberToken(4.25, 1),
                 new DivideOperationToken(6),
-                new GroupToken(GroupTokenType.Opening, 8),
+                new GroupOpenOperatorToken(8),
                 new NumberToken(-10, 9),
                 new MultiplyOperationToken(13),
-                new GroupToken(GroupTokenType.Opening, 15),
+                new GroupOpenOperatorToken(15),
                 new NumberToken(-5.5, 16),
                 new AddOperationToken(21),
                 new NumberToken(25.5, 23),
-                new GroupToken(GroupTokenType.Closing, 27),
-                new GroupToken(GroupTokenType.Closing, 28),
+                new GroupCloseOperatorToken(27),
+                new GroupCloseOperatorToken(28),
             },
             PostfixTokens = new IToken[]
             {
@@ -130,9 +131,9 @@ namespace ArithmeticCalculator.Tests.Data
                 new NumberToken(2, 5),
                 new AddOperationToken(7),
                 new StringToken("abs", 9),
-                new GroupToken(GroupTokenType.Opening, 12),
+                new GroupOpenOperatorToken(12),
                 new NumberToken(-3, 13),
-                new GroupToken(GroupTokenType.Closing, 15),
+                new GroupCloseOperatorToken(15),
                 new AddOperationToken(17),
                 new NumberToken(4, 19),
                 new SubtractOperationToken(21),
@@ -168,16 +169,16 @@ namespace ArithmeticCalculator.Tests.Data
             InfixTokens = new IToken[]
             {
                 new StringToken("sin", 1),
-                new GroupToken(GroupTokenType.Opening, 4),
+                new GroupOpenOperatorToken(4),
                 new StringToken("PI", 5),
                 new DivideOperationToken(8),
                 new NumberToken(6, 10),
-                new GroupToken(GroupTokenType.Closing, 11),
+                new GroupCloseOperatorToken(11),
                 new AddOperationToken(13),
                 new StringToken("ln", 15),
-                new GroupToken(GroupTokenType.Opening, 17),
+                new GroupOpenOperatorToken(17),
                 new StringToken("E", 18),
-                new GroupToken(GroupTokenType.Closing, 19),
+                new GroupCloseOperatorToken(19),
                 
             },
             PostfixTokens = new IToken[]
