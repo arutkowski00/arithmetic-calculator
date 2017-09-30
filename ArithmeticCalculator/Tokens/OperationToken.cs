@@ -2,7 +2,7 @@
 
 namespace ArithmeticCalculator.Tokens
 {
-    public abstract class OperationToken : OperatorToken<OperationType>
+    public abstract class OperationToken : OperatorToken
     {
         public abstract OperationAssociativity Associativity { get; }
         public abstract int Precedence { get; }

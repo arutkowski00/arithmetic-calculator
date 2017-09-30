@@ -98,7 +98,7 @@ namespace ArithmeticCalculator.Algorithms
                         }
                         break;
                     case SymbolType.Operator:
-                        if ((tokens.Count == 0 || tokens.Last().IsOperator) &&
+                        if ((tokens.Count == 0 || tokens.Last() is OperatorToken) &&
                             symbol == NegativeSign)
                         {
                             switch (nextSymbolType)

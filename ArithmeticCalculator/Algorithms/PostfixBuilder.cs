@@ -36,7 +36,7 @@ namespace ArithmeticCalculator.Algorithms
                 else if (infixToken is GroupToken)
                 {
                     var groupToken = (GroupToken) infixToken;
-                    if (groupToken.Value == GroupTokenType.Opening)
+                    if (groupToken.GroupTokenType == GroupTokenType.Opening)
                     {
                         operatorStack.Push(groupToken);
                     }
@@ -49,7 +49,7 @@ namespace ArithmeticCalculator.Algorithms
                             var groupTokenFromStack = tokenFromStack as GroupToken;
 
                             if (groupTokenFromStack != null &&
-                                groupTokenFromStack.Value == GroupTokenType.Opening)
+                                groupTokenFromStack.GroupTokenType == GroupTokenType.Opening)
                             {
                                 openingFound = true;
                                 break;

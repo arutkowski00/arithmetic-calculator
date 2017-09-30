@@ -8,7 +8,6 @@ namespace ArithmeticCalculator.Tokens.OperationTokens
         public override OperationAssociativity Associativity => OperationAssociativity.Right;
         public override int Precedence => 3;
         public override char Symbol => '^';
-        public override OperationType Value => OperationType.Exponent;
 
         public override double Calculate(double x, double y)
         {

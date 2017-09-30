@@ -3,8 +3,6 @@
     public abstract class BaseToken : IToken
     {
         public int CharAt { get; }
-        public abstract bool IsNumber { get; }
-        public abstract bool IsOperator { get; }
         
         protected BaseToken(int charAt)
         {

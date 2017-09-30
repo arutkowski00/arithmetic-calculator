@@ -72,7 +72,6 @@
     <Compile Include="Tokens\OperationTokens\ModuloOperationToken.cs" />
     <Compile Include="Tokens\OperationTokens\MultiplyOperationToken.cs" />
     <Compile Include="Tokens\OperationTokens\SubtractOperationToken.cs" />
-    <Compile Include="Tokens\OperationType.cs" />
     <Compile Include="Tokens\OperatorToken.cs" />
     <Compile Include="SymbolType.cs" />
     <Compile Include="Tokens\StringToken.cs" />

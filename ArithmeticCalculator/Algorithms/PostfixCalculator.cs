@@ -8,20 +8,7 @@ namespace ArithmeticCalculator.Algorithms
 {
     public class PostfixCalculator : IPostfixCalculator
     {
-        public delegate double CalculateOperationCallback(double x, double y);
-
-        public delegate double CalculateFunctionCallback(double x);
-
-        private readonly Dictionary<OperationType, CalculateOperationCallback> _operationTypeFuncs =
-            new Dictionary<OperationType, CalculateOperationCallback>
-            {
-                {OperationType.Add, (x, y) => x + y},
-                {OperationType.Subtract, (x, y) => x - y},
-                {OperationType.Multiply, (x, y) => x * y},
-                {OperationType.Divide, (x, y) => x / y},
-                {OperationType.Modulo, (x, y) => x % y},
-                {OperationType.Exponent, Math.Pow}
-            };
+        private delegate double CalculateFunctionCallback(double x);
 
         private readonly Dictionary<string, CalculateFunctionCallback> _stringFuncs =
             new Dictionary<string, CalculateFunctionCallback>
@@ -58,7 +45,6 @@ namespace ArithmeticCalculator.Algorithms
                 else if (token is OperationToken)
                 {
                     var operationToken = (OperationToken) token;
-                    var calculateOperation = _operationTypeFuncs[operationToken.Value];
 
                     if (numbersStack.Count < 2)
                     {
@@ -69,7 +55,7 @@ namespace ArithmeticCalculator.Algorithms
                     var b = numbersStack.Pop();
                     var a = numbersStack.Pop();
 
-                    var result = calculateOperation(a.Value, b.Value);
+                    var result = operationToken.Calculate(a.Value, b.Value);
                     numbersStack.Push(new NumberToken(result, token.CharAt));
                 }
                 else if (token is StringToken)
