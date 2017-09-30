@@ -85,7 +85,7 @@ namespace ArithmeticCalculator.Algorithms
                             double number;
                             if (!double.TryParse(tokenString,
                                 NumberStyles.Number,
-                                CultureInfo.CurrentCulture,
+                                CultureInfo.InvariantCulture,
                                 out number))
                             {
                                 throw new ParseException($"Invalid number format: {tokenString}",
