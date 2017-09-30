@@ -1,5 +1,5 @@
 # arithmetic-calculator
-[![Build Status](https://travis-ci.com/arutkowski00/arithmetic-calculator.svg?token=LPWwjrTctXcG7aKHsrMK&branch=master)](https://travis-ci.com/arutkowski00/arithmetic-calculator)
+[![Build Status](https://travis-ci.org/arutkowski00/arithmetic-calculator.svg?branch=master)](https://travis-ci.org/arutkowski00/arithmetic-calculator)
 
 ## Features
 - interactively solve arithmetic problems using simple infix notation
