@@ -150,5 +150,16 @@ namespace ArithmeticCalculator.Algorithms
                 .DefaultIfEmpty(SymbolType.Unknown)
                 .FirstOrDefault();
         }
+
+        public enum SymbolType
+        {
+            Unknown,
+            OpeningBracket,
+            ClosingBracket,
+            Letter,
+            Digit,
+            Operator,
+            Whitespace
+        }
     }
 }
