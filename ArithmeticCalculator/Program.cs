@@ -1,19 +1,31 @@
 ﻿using System;
 using ArithmeticCalculator.Exceptions;
+using Console = ArithmeticCalculator.Utils.ConsoleEx;
 
 namespace ArithmeticCalculator
 {
     internal class Program
     {
+        private const string ExitCommand = "exit";
+        private readonly Calculator _calculator;
+
         public static void Main(string[] args)
         {
             var container = IocContainer.GetContainer();
             container.Verify();
 
-            var calculator = container.GetInstance<Calculator>();
+            var program = container.GetInstance<Program>();
+            program.RunCli();
+        }
 
-            const string exitCommand = "exit";
-            
+        public Program(Calculator calculator)
+        {
+            _calculator = calculator;    
+        }
+
+        public void RunCli()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
             while (true)
             {
                 Console.Write("> ");
@@ -22,45 +34,49 @@ namespace ArithmeticCalculator
                 if (string.IsNullOrWhiteSpace(input))
                     continue;
 
-                if (input == exitCommand)
-                    break;
+                if (input == ExitCommand)
+                    return;
 
                 try
                 {
-                    var result = calculator.Calculate(input);
-                    Console.WriteLine("= {0}", result);
-                }
-                catch (ParseException ex)
-                {
-                    WriteError("[ERROR] {0}", ex.Message);
+                    var result = _calculator.Calculate(input);
+                    Console.WriteLine($"= {result}", ConsoleColor.Green);
                 }
                 catch (AggregateException ex)
                 {
                     foreach (var innerEx in ex.InnerExceptions)
                     {
-                        if (innerEx is ParseException)
-                        {
-                            WriteError("[ERROR] {0}", innerEx.Message);
-                        }
-                        else
-                        {
-                            WriteError("[FATAL] {0}", innerEx.ToString());
-                        }
+                        WriteException(innerEx);
                     }
                 }
                 catch (Exception ex)
                 {
-                    WriteError("[FATAL] {0}", ex.ToString());
+                    WriteException(ex);
                 }
             }
         }
 
-        static void WriteError(string format, params object[] args)
+        private static void WriteException(Exception exception)
         {
-            var fgColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(format, args);
-            Console.ForegroundColor = fgColor;
+            if (exception is ParseException)
+            {
+                WriteError(LogSeverity.Error, exception.Message);
+            }
+            else
+            {
+                WriteError(LogSeverity.Fatal, exception.ToString());
+            }
+        }
+
+        private static void WriteError(LogSeverity severity, string format, params object[] args)
+        {
+            Console.WriteLine($"[{severity.ToString().ToUpper()}] {format}", ConsoleColor.Red, args);
+        }
+
+        private enum LogSeverity
+        {
+            Error,
+            Fatal
         }
     }
 }
