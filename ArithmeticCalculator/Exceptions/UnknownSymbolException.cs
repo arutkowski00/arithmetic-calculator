@@ -2,8 +2,8 @@
 {
     public class UnknownSymbolException : ParseException
     {
-        public UnknownSymbolException(char token, int column)
-            : base($"Unknown symbol: {token}", column)
+        public UnknownSymbolException(char symbol, int column)
+            : base($"Unknown symbol: {symbol}", column)
         {
         }
     }
