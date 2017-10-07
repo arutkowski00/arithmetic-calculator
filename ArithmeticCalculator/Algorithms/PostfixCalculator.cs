@@ -56,11 +56,12 @@ namespace ArithmeticCalculator.Algorithms
                     var a = numbersStack.Pop();
 
                     var result = operationToken.Calculate(a.Value, b.Value);
-                    numbersStack.Push(new NumberToken(result, token.CharAt));
+                    numbersStack.Push(new NumberToken(result, b.CharAt));
                 }
                 else if (token is StringToken)
                 {
                     var stringToken = (StringToken) token;
+                    var newCharAt = token.CharAt;
                     double result;
 
                     if (_stringFuncs.ContainsKey(stringToken.Value))
@@ -68,6 +69,7 @@ namespace ArithmeticCalculator.Algorithms
                         var calculateFunction = _stringFuncs[stringToken.Value];
                         var numberToken = numbersStack.Pop();
                         result = calculateFunction(numberToken.Value);
+                        newCharAt = numberToken.CharAt;
                     }
                     else if (_stringConsts.ContainsKey(stringToken.Value))
                     {
@@ -78,7 +80,7 @@ namespace ArithmeticCalculator.Algorithms
                         throw new UnknownTokenValueException(stringToken);
                     }
 
-                    numbersStack.Push(new NumberToken(result, token.CharAt));
+                    numbersStack.Push(new NumberToken(result, newCharAt));
                 }
                 else
                 {

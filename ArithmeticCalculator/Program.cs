@@ -25,7 +25,13 @@ namespace ArithmeticCalculator
 
         public void RunCli()
         {
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            Console.WriteLine("Welcome to Arithmetic Calculator!");
+            Console.WriteLine("Press ^C or type 'exit' to quit\n");
+            
             Console.ForegroundColor = ConsoleColor.White;
+            
             while (true)
             {
                 Console.Write("> ");
